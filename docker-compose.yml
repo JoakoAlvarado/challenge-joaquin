@@ -1,0 +1,43 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ChallengeApi.API/Dockerfile
+    container_name: challengeapi
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    networks:
+      - challengenet
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: challengeapi-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=ChallengeApi_2026!
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'ChallengeApi_2026!' -Q 'SELECT 1' -No -C || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - challengenet
+
+volumes:
+  sqlserver_data:
+
+networks:
+  challengenet:
+    driver: bridge

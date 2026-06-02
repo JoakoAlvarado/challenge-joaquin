@@ -1,0 +1,21 @@
+# Build
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Logs
+logs/
+
+# Docker
+docker-compose.override.yml
+
+# Secretos locales
+appsettings.Development.json
+
+# OS
+.DS_Store
+Thumbs.db

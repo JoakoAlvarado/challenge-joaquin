@@ -76,7 +76,12 @@ docker compose down
 
 Requisitos:
 - .NET 8 SDK
-- SQL Server local
+- SQL Server local instalado y corriendo
+- Herramientas de EF Core instaladas globalmente:
+
+```bash
+dotnet tool install --global dotnet-ef
+```
 
 Configurar el connection string en `ChallengeApi.API/appsettings.json` si es necesario:
 
@@ -86,11 +91,14 @@ Configurar el connection string en `ChallengeApi.API/appsettings.json` si es nec
 }
 ```
 
-Correr las migraciones:
+Crear la base de datos y aplicar las migraciones:
 
 ```bash
+dotnet ef migrations add InitialCreate --project ChallengeApi.Infrastructure --startup-project ChallengeApi.API
 dotnet ef database update --project ChallengeApi.Infrastructure --startup-project ChallengeApi.API
 ```
+
+> Si la migración ya existe en el repositorio, ejecutar solo el segundo comando.
 
 Correr la API:
 
@@ -98,6 +106,16 @@ Correr la API:
 cd ChallengeApi.API
 dotnet run
 ```
+
+Acceder a Swagger UI según el método usado:
+
+| Método | URL |
+|--------|-----|
+| `dotnet run` (http) | http://localhost:5176 |
+| `dotnet run` (https) | https://localhost:7043 |
+| IIS Express (Visual Studio) | https://localhost:44365 |
+| Docker | http://localhost:8080 |
+
 
 ## Endpoints disponibles
 

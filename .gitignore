@@ -9,6 +9,7 @@ obj/
 
 # Logs
 logs/
+*.log
 
 # Docker
 docker-compose.override.yml

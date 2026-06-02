@@ -1,16 +1,16 @@
-# ChallengeApi — API REST de Horóscopo
+# ChallengeApi ï¿½ API REST de Horï¿½scopo
 
-API REST desarrollada en .NET 8 como solución al challenge técnico de Recursiva S.R.L.
+API REST desarrollada en .NET 8 como soluciï¿½n al challenge tï¿½cnico de Recursiva S.R.L.
 
-## Tecnologías utilizadas
+## Tecnologï¿½as utilizadas
 
 - .NET 8 (LTS)
-- ASP.NET Core Web API con controllers clásicos
+- ASP.NET Core Web API con controllers clï¿½sicos
 - Entity Framework Core 8 (Code First)
 - SQL Server 2022
-- JWT para autenticación
+- JWT para autenticaciï¿½n
 - Serilog para logging estructurado
-- IMemoryCache para caché de horóscopo diario
+- IMemoryCache para cachï¿½ de horï¿½scopo diario
 - xUnit + Moq + FluentAssertions para tests unitarios
 - Docker + Docker Compose
 - Swagger UI como interfaz de prueba
@@ -19,10 +19,10 @@ API REST desarrollada en .NET 8 como solución al challenge técnico de Recursiva 
 
 El proyecto sigue Clean Architecture con cuatro capas:
 
-- **ChallengeApi.Domain** — Entidades y excepciones de dominio, sin dependencias externas
-- **ChallengeApi.Application** — Casos de uso, interfaces, DTOs y servicios
-- **ChallengeApi.Infrastructure** — EF Core, repositorios, caché y cliente HTTP externo
-- **ChallengeApi.API** — Controllers, middleware y configuración
+- **ChallengeApi.Domain** ï¿½ Entidades y excepciones de dominio, sin dependencias externas
+- **ChallengeApi.Application** ï¿½ Casos de uso, interfaces, DTOs y servicios
+- **ChallengeApi.Infrastructure** ï¿½ EF Core, repositorios, cachï¿½ y cliente HTTP externo
+- **ChallengeApi.API** ï¿½ Controllers, middleware y configuraciï¿½n
 
 ## Requisitos previos
 
@@ -42,16 +42,29 @@ cd ChallengeApi
 Levantar todos los servicios:
 
 ```bash
-docker compose up --build
+docker compose down -v --remove-orphans
+docker rmi challengeapi-api
+docker compose build --no-cache
+docker compose up -d
 ```
 
 Esto levanta:
 - **SQL Server 2022** en el puerto 1433
 - **ChallengeApi** en el puerto 8080
 
-La base de datos se crea y migra automáticamente al iniciar.
+La base de datos se crea y migra automï¿½ticamente al iniciar.
 
 Acceder a Swagger UI: http://localhost:8080
+
+
+Reconstruir despuÃ©s de cambios:
+
+```bash
+docker compose down
+docker compose build --no-cache
+docker compose up -d
+```
+
 
 Bajar los servicios:
 
@@ -88,35 +101,35 @@ dotnet run
 
 ## Endpoints disponibles
 
-### Autenticación (sin token)
+### Autenticaciï¿½n (sin token)
 
-| Método | Ruta | Descripción |
+| Mï¿½todo | Ruta | Descripciï¿½n |
 |--------|------|-------------|
 | POST | `/api/auth/register` | Registrar nuevo usuario |
 | POST | `/api/auth/login` | Login, devuelve JWT |
 
 ### Usuario (requiere token)
 
-| Método | Ruta | Descripción |
+| Mï¿½todo | Ruta | Descripciï¿½n |
 |--------|------|-------------|
 | GET | `/api/user/me` | Ver perfil del usuario |
 | PUT | `/api/user/me` | Actualizar perfil (excepto username) |
 
-### Horóscopo (requiere token)
+### Horï¿½scopo (requiere token)
 
-| Método | Ruta | Descripción |
+| Mï¿½todo | Ruta | Descripciï¿½n |
 |--------|------|-------------|
-| GET | `/api/horoscope` | Horóscopo del día + días al cumpleaños |
+| GET | `/api/horoscope` | Horï¿½scopo del dï¿½a + dï¿½as al cumpleaï¿½os |
 | GET | `/api/horoscope/historial` | Historial de consultas del usuario |
-| GET | `/api/horoscope/estadisticas` | Signos más consultados |
+| GET | `/api/horoscope/estadisticas` | Signos mï¿½s consultados |
 
-## Cómo usar Swagger con autenticación
+## Cï¿½mo usar Swagger con autenticaciï¿½n
 
 1. Ejecutar `POST /api/auth/register` con los datos del usuario
 2. Ejecutar `POST /api/auth/login` y copiar el `token` de la respuesta
-3. Click en el botón **Authorize** (candado) en la esquina superior derecha
+3. Click en el botï¿½n **Authorize** (candado) en la esquina superior derecha
 4. Ingresar: `Bearer {token}`
-5. Click en **Authorize** y ya podés usar los endpoints protegidos
+5. Click en **Authorize** y ya podï¿½s usar los endpoints protegidos
 
 ## Correr los tests
 
@@ -124,11 +137,25 @@ dotnet run
 dotnet test
 ```
 
-## Decisiones técnicas destacadas
+## Decisiones tï¿½cnicas destacadas
 
 - **Clean Architecture** para separar responsabilidades y facilitar el testeo unitario
-- **IMemoryCache** para cachear el horóscopo del día por signo, evitando llamadas repetidas a la API externa. La caché expira a medianoche UTC
-- **BCrypt** para hashing de contraseñas
-- **Mismo mensaje de error** para usuario no encontrado y password incorrecta, evitando enumeración de usuarios
-- **ClockSkew = TimeSpan.Zero** en JWT para expiración exacta del token
-- **Migraciones automáticas** al iniciar la aplicación para simplificar el despliegue con Docker
+- **IMemoryCache** para cachear el horï¿½scopo del dï¿½a por signo, evitando llamadas repetidas a la API externa. La cachï¿½ expira a medianoche UTC
+- **BCrypt** para hashing de contraseï¿½as
+- **Mismo mensaje de error** para usuario no encontrado y password incorrecta, evitando enumeraciï¿½n de usuarios
+- **ClockSkew = TimeSpan.Zero** en JWT para expiraciï¿½n exacta del token
+- **Migraciones automï¿½ticas** al iniciar la aplicaciï¿½n para simplificar el despliegue con Docker
+
+### ConfiguraciÃ³n Docker
+
+La ejecuciÃ³n mediante Docker utiliza:
+
+```yaml
+ASPNETCORE_ENVIRONMENT=Production
+```
+
+y la cadena de conexiÃ³n definida en:
+
+```text
+appsettings.Production.json
+```

@@ -1,4 +1,4 @@
-# ChallengeApi � API REST de Hor�scopo
+# API REST de Horóscopo
 
 API REST desarrollada en .NET 8
 

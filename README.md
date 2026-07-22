@@ -1,16 +1,16 @@
 # ChallengeApi � API REST de Hor�scopo
 
-API REST desarrollada en .NET 8 como soluci�n al challenge t�cnico de Recursiva S.R.L.
+API REST desarrollada en .NET 8
 
 ## Tecnolog�as utilizadas
 
 - .NET 8 (LTS)
-- ASP.NET Core Web API con controllers cl�sicos
+- ASP.NET Core Web API con controllers clásicos
 - Entity Framework Core 8 (Code First)
 - SQL Server 2022
-- JWT para autenticaci�n
+- JWT para autenticación
 - Serilog para logging estructurado
-- IMemoryCache para cach� de hor�scopo diario
+- IMemoryCache para cache de horoscopo diario
 - xUnit + Moq + FluentAssertions para tests unitarios
 - Docker + Docker Compose
 - Swagger UI como interfaz de prueba
@@ -19,10 +19,10 @@ API REST desarrollada en .NET 8 como soluci�n al challenge t�cnico de Recurs
 
 El proyecto sigue Clean Architecture con cuatro capas:
 
-- **ChallengeApi.Domain** � Entidades y excepciones de dominio, sin dependencias externas
-- **ChallengeApi.Application** � Casos de uso, interfaces, DTOs y servicios
-- **ChallengeApi.Infrastructure** � EF Core, repositorios, cach� y cliente HTTP externo
-- **ChallengeApi.API** � Controllers, middleware y configuraci�n
+- **ChallengeApi.Domain** : Entidades y excepciones de dominio, sin dependencias externas
+- **ChallengeApi.Application** : Casos de uso, interfaces, DTOs y servicios
+- **ChallengeApi.Infrastructure** : EF Core, repositorios, caché y cliente HTTP externo
+- **ChallengeApi.API** : Controllers, middleware y configuración
 
 ## Requisitos previos
 
@@ -119,7 +119,7 @@ Acceder a Swagger UI según el método usado:
 
 ## Endpoints disponibles
 
-### Autenticaci�n (sin token)
+### Autenticación (sin token)
 
 | M�todo | Ruta | Descripci�n |
 |--------|------|-------------|
@@ -137,17 +137,17 @@ Acceder a Swagger UI según el método usado:
 
 | M�todo | Ruta | Descripci�n |
 |--------|------|-------------|
-| GET | `/api/horoscope` | Hor�scopo del d�a + d�as al cumplea�os |
+| GET | `/api/horoscope` | Horóscopo del día + días al cumpleaños |
 | GET | `/api/horoscope/historial` | Historial de consultas del usuario |
-| GET | `/api/horoscope/estadisticas` | Signos m�s consultados |
+| GET | `/api/horoscope/estadisticas` | Signos más consultados |
 
 ## C�mo usar Swagger con autenticaci�n
 
 1. Ejecutar `POST /api/auth/register` con los datos del usuario
 2. Ejecutar `POST /api/auth/login` y copiar el `token` de la respuesta
-3. Click en el bot�n **Authorize** (candado) en la esquina superior derecha
+3. Click en el botón **Authorize** (candado) en la esquina superior derecha
 4. Ingresar: `Bearer {token}`
-5. Click en **Authorize** y ya pod�s usar los endpoints protegidos
+5. Click en **Authorize** y ya podés usar los endpoints protegidos
 
 ## Correr los tests
 
@@ -155,7 +155,7 @@ Acceder a Swagger UI según el método usado:
 dotnet test
 ```
 
-## Decisiones t�cnicas destacadas
+## Decisiones técnicas destacadas
 
 - **Clean Architecture** para separar responsabilidades y facilitar el testeo unitario
 - **IMemoryCache** para cachear el hor�scopo del d�a por signo, evitando llamadas repetidas a la API externa. La cach� expira a medianoche UTC

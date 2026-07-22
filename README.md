@@ -141,7 +141,7 @@ Acceder a Swagger UI según el método usado:
 | GET | `/api/horoscope/historial` | Historial de consultas del usuario |
 | GET | `/api/horoscope/estadisticas` | Signos más consultados |
 
-## C�mo usar Swagger con autenticaci�n
+## Cómo usar Swagger con autenticación
 
 1. Ejecutar `POST /api/auth/register` con los datos del usuario
 2. Ejecutar `POST /api/auth/login` y copiar el `token` de la respuesta
@@ -158,11 +158,11 @@ dotnet test
 ## Decisiones técnicas destacadas
 
 - **Clean Architecture** para separar responsabilidades y facilitar el testeo unitario
-- **IMemoryCache** para cachear el hor�scopo del d�a por signo, evitando llamadas repetidas a la API externa. La cach� expira a medianoche UTC
-- **BCrypt** para hashing de contrase�as
-- **Mismo mensaje de error** para usuario no encontrado y password incorrecta, evitando enumeraci�n de usuarios
+- **IMemoryCache** para cachear el hor�scopo del d�a por signo, evitando llamadas repetidas a la API externa. La caché expira a medianoche UTC
+- **BCrypt** para hashing de contraseñas
+- **Mismo mensaje de error** para usuario no encontrado y password incorrecta, evitando enumeración de usuarios
 - **ClockSkew = TimeSpan.Zero** en JWT para expiraci�n exacta del token
-- **Migraciones autom�ticas** al iniciar la aplicaci�n para simplificar el despliegue con Docker
+- **Migraciones automáticas** al iniciar la aplicaci�n para simplificar el despliegue con Docker
 
 ### Configuración Docker
 
